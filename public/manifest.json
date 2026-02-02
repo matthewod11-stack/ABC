@@ -1,0 +1,17 @@
+{
+  "name": "Princess Paws Tracing",
+  "short_name": "Princess Paws",
+  "description": "A magical letter tracing adventure for young learners",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#f9a8d4",
+  "background_color": "#fdf4ff",
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
