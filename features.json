@@ -60,10 +60,10 @@
     {"id": "F016", "name": "FloatingDecor", "phase": 3, "status": "not-started"},
     {"id": "F017", "name": "CuteBackground", "phase": 3, "status": "not-started"},
     {"id": "F020", "name": "Path Authoring Tool", "phase": 4, "status": "not-started"},
-    {"id": "F021", "name": "Letters A-Z", "phase": 4, "status": "not-started"},
-    {"id": "F022", "name": "Numbers 0-9", "phase": 4, "status": "not-started"},
-    {"id": "F023", "name": "Shapes", "phase": 4, "status": "not-started"}
+    {"id": "F021", "name": "Letters A-Z", "phase": 4, "status": "completed"},
+    {"id": "F022", "name": "Numbers 0-9", "phase": 4, "status": "completed"},
+    {"id": "F023", "name": "Shapes", "phase": 4, "status": "completed"}
   ],
   "created_at": "2026-02-01T00:00:00Z",
-  "last_updated": "2026-02-01T20:15:00Z"
+  "last_updated": "2026-02-02T00:00:00Z"
 }

@@ -3,8 +3,8 @@ import type { Point } from '../../../types';
 /** Hit radius as percentage of canvas (12% = forgiving for small fingers) */
 export const HIT_RADIUS = 0.12;
 
-/** Minimum coverage required for completion (70%) */
-export const COMPLETION_THRESHOLD = 0.7;
+/** Minimum coverage required for completion (99%) */
+export const COMPLETION_THRESHOLD = 0.99;
 
 /** Minimum forward progressions required to prevent scribbling */
 export const MIN_FORWARD_PROGRESSIONS = 2;

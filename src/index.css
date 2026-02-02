@@ -38,6 +38,21 @@
 .animate-bounce-gentle { animation: bounce-gentle 2s ease-in-out infinite; }
 .animate-wiggle { animation: wiggle 1s ease-in-out infinite; }
 
+/* Slower float variants for ambient decorations */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+@keyframes float-drift {
+  0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+  33% { transform: translateY(-15px) translateX(5px) rotate(3deg); }
+  66% { transform: translateY(-10px) translateX(-5px) rotate(-3deg); }
+}
+
+.animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
+.animate-float-drift { animation: float-drift 8s ease-in-out infinite; }
+
 /* Base styles */
 html, body, #root {
   height: 100%;
@@ -50,6 +65,20 @@ html, body, #root {
 body {
   font-family: var(--font-family-body);
   background: linear-gradient(135deg, var(--color-princess-lavender) 0%, var(--color-princess-pink) 100%);
+  transition: background 0.5s ease-out;
+}
+
+/* Page-specific backgrounds */
+.bg-page-home {
+  background: linear-gradient(135deg, var(--color-princess-lavender) 0%, var(--color-princess-pink) 100%);
+}
+
+.bg-page-tracing {
+  background: linear-gradient(180deg, var(--color-princess-mint) 0%, var(--color-princess-lavender) 50%, var(--color-princess-pink) 100%);
+}
+
+.bg-page-complete {
+  background: linear-gradient(135deg, var(--color-princess-gold) 0%, var(--color-princess-pink) 50%, var(--color-princess-lavender) 100%);
 }
 
 /* Prevent text selection during tracing */

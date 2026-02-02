@@ -6,6 +6,7 @@ import {
   useImperativeHandle,
 } from 'react';
 import type { Point } from '../../../types';
+import { useTracingStateOptional } from '../../../hooks/useTracingState';
 
 export interface DrawingLayerRef {
   clear: () => void;
@@ -34,7 +35,7 @@ export const DrawingLayer = forwardRef<DrawingLayerRef, DrawingLayerProps>(
       onStrokeUpdate,
       onStrokeEnd,
       strokeColor = '#9333ea', // Purple-600
-      strokeWidth = 8,
+      strokeWidth = 45,
     },
     ref
   ) {
@@ -44,6 +45,9 @@ export const DrawingLayer = forwardRef<DrawingLayerRef, DrawingLayerProps>(
     const currentStrokeRef = useRef<Point[]>([]);
     const allStrokesRef = useRef<Point[][]>([]);
     const lastPointRef = useRef<Point | null>(null);
+
+    // Report tracing state to pause ambient effects
+    const tracingState = useTracingStateOptional();
 
     // Initialize canvas with proper DPR scaling
     useEffect(() => {
@@ -126,6 +130,8 @@ export const DrawingLayer = forwardRef<DrawingLayerRef, DrawingLayerProps>(
         e.preventDefault();
 
         isDrawingRef.current = true;
+        tracingState?.setIsTracing(true); // Pause ambient effects
+
         const point = normalizePoint(e);
         currentStrokeRef.current = [point];
         lastPointRef.current = point;
@@ -133,12 +139,13 @@ export const DrawingLayer = forwardRef<DrawingLayerRef, DrawingLayerProps>(
         // Draw a dot at the start position
         const ctx = ctxRef.current;
         if (ctx) {
+          ctx.fillStyle = strokeColor;
           ctx.beginPath();
           ctx.arc(point.x * width, point.y * height, strokeWidth / 2, 0, Math.PI * 2);
           ctx.fill();
         }
       },
-      [normalizePoint, width, height, strokeWidth]
+      [normalizePoint, width, height, strokeWidth, strokeColor, tracingState]
     );
 
     const handlePointerMove = useCallback(
@@ -172,6 +179,7 @@ export const DrawingLayer = forwardRef<DrawingLayerRef, DrawingLayerProps>(
         e.currentTarget.releasePointerCapture(e.pointerId);
 
         isDrawingRef.current = false;
+        tracingState?.setIsTracing(false); // Resume ambient effects
 
         // Save completed stroke
         if (currentStrokeRef.current.length > 0) {
@@ -185,7 +193,7 @@ export const DrawingLayer = forwardRef<DrawingLayerRef, DrawingLayerProps>(
         onStrokeUpdate?.(allStrokesRef.current);
         onStrokeEnd?.();
       },
-      [onStrokeUpdate, onStrokeEnd]
+      [onStrokeUpdate, onStrokeEnd, tracingState]
     );
 
     // Clear all strokes

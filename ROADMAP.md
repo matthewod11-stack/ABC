@@ -162,10 +162,10 @@ And: Scrubbing back-and-forth does NOT trigger completion
 
 ### Exit Criteria
 - [ ] Path authoring tool works and speeds up creation
-- [ ] All 41 items have SVG paths
-- [ ] All items have 8-15 guide dots each (auto-generated)
-- [ ] Validation confirms all items load and display correctly
-- [ ] Difficulty levels assigned (simple = fewer dots)
+- [x] All 41 items have SVG paths
+- [x] All items have 8-15 guide dots each (auto-generated)
+- [x] Validation confirms all items load and display correctly
+- [x] Difficulty levels assigned (simple = fewer dots)
 
 ### Technical Notes
 - **Realistic estimate: 8-12 hours total** (with tooling)

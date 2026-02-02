@@ -18,10 +18,25 @@ const defaultState: AppState = {
   isComplete: false,
 };
 
-// Parse state from URL hash
+// Cache for getSnapshot to avoid infinite loops with useSyncExternalStore
+let cachedHash = '';
+let cachedState: AppState = defaultState;
+
+// Parse state from URL hash (with caching for React 18 useSyncExternalStore)
 function getStateFromHash(): AppState {
   const hash = window.location.hash.slice(1);
-  if (!hash) return defaultState;
+
+  // Return cached state if hash hasn't changed
+  if (hash === cachedHash) {
+    return cachedState;
+  }
+
+  cachedHash = hash;
+
+  if (!hash) {
+    cachedState = defaultState;
+    return cachedState;
+  }
 
   const params = new URLSearchParams(hash);
   const category = params.get('category') as Category | null;
@@ -29,14 +44,16 @@ function getStateFromHash(): AppState {
   const complete = params.get('complete') === 'true';
 
   if (category && ['letter', 'number', 'shape'].includes(category)) {
-    return {
+    cachedState = {
       currentCategory: category,
       currentIndex: index,
       isComplete: complete,
     };
+  } else {
+    cachedState = defaultState;
   }
 
-  return defaultState;
+  return cachedState;
 }
 
 // Convert state to URL hash

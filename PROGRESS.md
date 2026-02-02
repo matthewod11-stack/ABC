@@ -118,4 +118,42 @@ src/
 
 ---
 
-*Last updated: 2026-02-01*
+---
+
+## Session: 2026-02-02 (Kid-Friendly UX Polish)
+
+### Completed
+- Disabled debug overlay in production (now requires `?debug=true` URL param)
+- Increased stroke width from 8px to 45px for spray-paint effect
+- Changed completion threshold from 70% to 99%
+- Created complete `letters.ts` with all 26 uppercase letters (A-Z)
+- Created `numbers.ts` with all 10 digits (1-9, 0)
+- Created `shapes.ts` with 5 shapes (Circle, Square, Triangle, Star, Heart)
+- Updated TracingPage to use new data sources
+- Removed placeholder fallback logic (all items now have tracing data)
+- Deleted superseded `testLetter.ts` file
+
+### In Progress
+- None
+
+### Issues Encountered
+- None - all changes implemented smoothly
+
+### Next Session Should
+1. Test on real iOS device to verify touch handling with 45px strokes
+2. Verify 99% completion threshold feels achievable but challenging
+3. Consider Phase 5 device testing matrix
+4. Optional: Add visual feedback for hit dots (color change on trace)
+
+### Features Completed This Session
+| ID | Feature | Notes |
+|----|---------|-------|
+| F021 | Letters A-Z | 26 letters with stroke-order guide dots |
+| F022 | Numbers 0-9 | 10 numbers (1-9, then 0 for educational order) |
+| F023 | Shapes | 5 shapes ordered by difficulty |
+
+### Verification
+- [x] `npx tsc --noEmit` passes
+- [x] `npm run build` succeeds (732ms)
+
+*Last updated: 2026-02-02*
