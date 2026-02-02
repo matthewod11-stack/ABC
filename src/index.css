@@ -59,6 +59,14 @@ body {
   -webkit-touch-callout: none;
 }
 
+/* Canvas drawing styles - prevent browser interference */
+.tracing-canvas {
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* Orientation gate styles - pure CSS approach */
 .orientation-message {
   display: none;
