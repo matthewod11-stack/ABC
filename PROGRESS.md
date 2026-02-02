@@ -2,6 +2,98 @@
 
 ---
 
+## Session: 2026-02-02 (Phase 6 Deployment)
+
+### What Happened
+- Completed Phase 6: Vercel Deployment
+- Created vercel.json for Vite SPA deployment
+- Added PWA manifest with princess pink theme
+- Fixed git credentials (switched from homebase to matthewod11-stack)
+- Successfully deployed to production
+
+### Features Completed
+| ID | Feature | Notes |
+|----|---------|-------|
+| F024 | Vercel Config | vercel.json with Vite framework settings |
+| F025 | PWA Manifest | Theme color, portrait orientation, standalone display |
+| F026 | Production Deploy | Live at https://abc-xi-six.vercel.app |
+
+### Technical Fixes
+- Cleared cached GitHub credentials from macOS keychain
+- Configured git to use `matthew.od11@gmail.com` / `matthewod11-stack`
+- Amended commit author to match Vercel team access
+
+### Verification
+- [x] Build successful (232KB JS, 20KB CSS gzipped)
+- [x] Deployed to https://abc-xi-six.vercel.app
+- [x] Manifest.json served correctly
+- [x] Site responding (HTTP 200)
+
+### Commit
+`4ab41c2 feat: add Vercel deployment config and PWA manifest`
+
+---
+
+## Session: 2026-02-02 (Kid-Friendly UX Polish)
+
+### What Happened
+- Completed Phases 2, 3, and 4
+- Added full navigation flow with category selection
+- Implemented visual effects (Fireworks, FloatingDecor, PageBackground)
+- Created all 41 tracing content items
+
+### Features Completed
+| ID | Feature | Notes |
+|----|---------|-------|
+| F011 | HomePage | Category selection (Letters, Numbers, Shapes) |
+| F012 | TracingPage | Full tracing view with nav controls |
+| F013 | Navigation Controls | Prev/Next/Clear/Home buttons |
+| F014 | Category Complete | Celebration screen after last item |
+| F015 | Fireworks | Canvas particle burst on completion |
+| F016 | FloatingDecor | Ambient sparkles, paw prints, crowns |
+| F017 | CuteBackground | Pastel gradients per page |
+| F021 | Letters A-Z | 26 uppercase letters with guide dots |
+| F022 | Numbers 0-9 | 10 digits (1-9, 0) with guide dots |
+| F023 | Shapes | Circle, Square, Triangle, Star, Heart |
+
+### UX Tweaks
+- Debug overlay disabled by default (enable via `?debug=true`)
+- Stroke width increased from 8px to 45px (spray paint feel)
+- Completion threshold raised from 70% to 99%
+
+### Commit
+`6c01b9e feat: kid-friendly UX polish with complete tracing content`
+
+---
+
+## Session: 2026-02-02 (Phase 1 Implementation)
+
+### What Happened
+- Completed Phase 1: Core Tracing (Technical Risk Mitigation)
+- Built canvas-based drawing with pointer events
+- iOS Safari touch hardening implemented
+- Completion detection with anti-scribble validation
+
+### Features Completed
+| ID | Feature | Notes |
+|----|---------|-------|
+| F005 | DrawingLayer | Canvas with devicePixelRatio scaling, multi-stroke |
+| F006 | GhostLetter | SVG faded path guide |
+| F007 | GuideDots | Ordered dots that light up when hit |
+| F008 | TracingCanvas | Composition layer with ResizeObserver |
+| F009 | Completion Detection | 70% threshold + sequence validation |
+| F010 | Debug Overlay | Dev visualization for hit radii and stats |
+
+### Technical Decisions
+- Normalized 0-1 coordinate system for scale independence
+- Sequence validation requires ≥2 forward progressions (anti-scribble)
+- Test letter "A" with 9 guide dots used for validation
+
+### Commit
+`d7735dd feat: implement Phase 1 core tracing mechanic`
+
+---
+
 ## Session: 2026-02-01 (Phase 0 Implementation)
 
 ### What Happened
@@ -20,26 +112,6 @@
 | F018 | Button Components | Button + IconButton with 48px touch targets |
 | F019 | OrientationGate | CSS-only landscape detection |
 
-### Files Created
-```
-src/
-├── App.tsx
-├── main.tsx
-├── index.css
-├── vite-env.d.ts
-├── types/index.ts
-├── hooks/useNavigation.ts
-├── pages/
-│   ├── HomePage.tsx
-│   ├── TracingPage.tsx
-│   └── CategoryCompletePage.tsx
-└── components/
-    ├── OrientationGate.tsx
-    └── ui/
-        ├── Button.tsx
-        └── IconButton.tsx
-```
-
 ### Verification
 - [x] `npm run dev` starts without errors
 - [x] `npx tsc --noEmit` passes
@@ -48,11 +120,8 @@ src/
 - [x] Navigation flow works (Home → Tracing → Complete → Home)
 - [x] Browser back button returns to previous state
 
-### Next Session Should
-1. Begin Phase 1: Core Tracing
-2. Implement DrawingLayer (F005) - touch/mouse stroke capture
-3. Implement GhostLetter (F006) - SVG path rendering
-4. Implement GuideDots (F007) - sequential dot highlighting
+### Commit
+`05ce90d feat: complete Phase 0 foundation`
 
 ---
 
@@ -74,86 +143,29 @@ src/
 
 ---
 
-## Feature Status
+## Feature Status Summary
 
-| ID | Feature | Phase | Status |
-|----|---------|-------|--------|
-| F001 | Project Setup | 0 | ✅ completed |
-| F002 | Type Definitions | 0 | ✅ completed |
-| F003 | App Shell | 0 | ✅ completed |
-| F004 | Tailwind Config | 0 | ✅ completed |
-| F018 | Button Components | 0 | ✅ completed |
-| F019 | OrientationGate | 0 | ✅ completed |
-| F005 | DrawingLayer | 1 | not-started |
-| F006 | GhostLetter | 1 | not-started |
-| F007 | GuideDots | 1 | not-started |
-| F008 | TracingCanvas | 1 | not-started |
-| F009 | Completion Detection | 1 | not-started |
-| F010 | Debug Overlay | 1 | not-started |
-| F011 | HomePage | 2 | not-started |
-| F012 | TracingPage | 2 | not-started |
-| F013 | Navigation Controls | 2 | not-started |
-| F014 | Category Complete | 2 | not-started |
-| F015 | Fireworks | 3 | not-started |
-| F016 | FloatingDecor | 3 | not-started |
-| F017 | CuteBackground | 3 | not-started |
-| F020 | Path Authoring Tool | 4 | not-started |
-| F021 | Letters A-Z | 4 | not-started |
-| F022 | Numbers 0-9 | 4 | not-started |
-| F023 | Shapes | 4 | not-started |
+| Phase | Name | Status | Features |
+|-------|------|--------|----------|
+| 0 | Foundation | ✅ completed | F001-F004, F018-F019 |
+| 1 | Core Tracing | ✅ completed | F005-F010 |
+| 2 | Navigation | ✅ completed | F011-F014 |
+| 3 | Visual Polish | ✅ completed | F015-F017 |
+| 4 | Content Creation | ✅ completed | F020 skipped, F021-F023 done |
+| 5 | Device Testing | 🔲 not started | — |
+| 6 | Deployment | ✅ completed | F024-F026 |
 
 ---
 
-## Phase Progress
+## Next Session Should
 
-| Phase | Status | Features |
-|-------|--------|----------|
-| 0 - Foundation | ✅ completed | F001-F004, F018-F019 |
-| 1 - Core Tracing | not-started | F005-F010 |
-| 2 - Navigation | not-started | F011-F014 |
-| 3 - Visual Polish | not-started | F015-F017 |
-| 4 - Content | not-started | F020-F023 |
-| 5 - Testing | not-started | Device matrix |
-| 6 - Deployment | not-started | Vercel launch |
+1. Begin Phase 5: Device Testing
+2. Test on real iOS Safari (iPhone 14, iPhone SE) at https://abc-xi-six.vercel.app
+3. Test on Android Chrome (Pixel 7)
+4. Verify touch event handling and coordinate alignment
+5. Run Lighthouse audit on mobile (target ≥90)
+6. Check performance on mid-range devices
 
 ---
-
----
-
-## Session: 2026-02-02 (Kid-Friendly UX Polish)
-
-### Completed
-- Disabled debug overlay in production (now requires `?debug=true` URL param)
-- Increased stroke width from 8px to 45px for spray-paint effect
-- Changed completion threshold from 70% to 99%
-- Created complete `letters.ts` with all 26 uppercase letters (A-Z)
-- Created `numbers.ts` with all 10 digits (1-9, 0)
-- Created `shapes.ts` with 5 shapes (Circle, Square, Triangle, Star, Heart)
-- Updated TracingPage to use new data sources
-- Removed placeholder fallback logic (all items now have tracing data)
-- Deleted superseded `testLetter.ts` file
-
-### In Progress
-- None
-
-### Issues Encountered
-- None - all changes implemented smoothly
-
-### Next Session Should
-1. Test on real iOS device to verify touch handling with 45px strokes
-2. Verify 99% completion threshold feels achievable but challenging
-3. Consider Phase 5 device testing matrix
-4. Optional: Add visual feedback for hit dots (color change on trace)
-
-### Features Completed This Session
-| ID | Feature | Notes |
-|----|---------|-------|
-| F021 | Letters A-Z | 26 letters with stroke-order guide dots |
-| F022 | Numbers 0-9 | 10 numbers (1-9, then 0 for educational order) |
-| F023 | Shapes | 5 shapes ordered by difficulty |
-
-### Verification
-- [x] `npx tsc --noEmit` passes
-- [x] `npm run build` succeeds (732ms)
 
 *Last updated: 2026-02-02*

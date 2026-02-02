@@ -11,22 +11,22 @@
     {
       "id": 1,
       "name": "Core Tracing",
-      "status": "not-started"
+      "status": "completed"
     },
     {
       "id": 2,
       "name": "Navigation",
-      "status": "not-started"
+      "status": "completed"
     },
     {
       "id": 3,
       "name": "Visual Polish",
-      "status": "not-started"
+      "status": "completed"
     },
     {
       "id": 4,
       "name": "Content Creation",
-      "status": "not-started"
+      "status": "completed"
     },
     {
       "id": 5,
@@ -36,7 +36,7 @@
     {
       "id": 6,
       "name": "Deployment",
-      "status": "not-started"
+      "status": "completed"
     }
   ],
   "features": [
@@ -46,24 +46,27 @@
     {"id": "F004", "name": "Tailwind Config", "phase": 0, "status": "completed"},
     {"id": "F018", "name": "Button Components", "phase": 0, "status": "completed"},
     {"id": "F019", "name": "OrientationGate", "phase": 0, "status": "completed"},
-    {"id": "F005", "name": "DrawingLayer", "phase": 1, "status": "not-started"},
-    {"id": "F006", "name": "GhostLetter", "phase": 1, "status": "not-started"},
-    {"id": "F007", "name": "GuideDots", "phase": 1, "status": "not-started"},
-    {"id": "F008", "name": "TracingCanvas", "phase": 1, "status": "not-started"},
-    {"id": "F009", "name": "Completion Detection", "phase": 1, "status": "not-started"},
-    {"id": "F010", "name": "Debug Overlay", "phase": 1, "status": "not-started"},
-    {"id": "F011", "name": "HomePage", "phase": 2, "status": "not-started"},
-    {"id": "F012", "name": "TracingPage", "phase": 2, "status": "not-started"},
-    {"id": "F013", "name": "Navigation Controls", "phase": 2, "status": "not-started"},
-    {"id": "F014", "name": "Category Complete", "phase": 2, "status": "not-started"},
-    {"id": "F015", "name": "Fireworks", "phase": 3, "status": "not-started"},
-    {"id": "F016", "name": "FloatingDecor", "phase": 3, "status": "not-started"},
-    {"id": "F017", "name": "CuteBackground", "phase": 3, "status": "not-started"},
-    {"id": "F020", "name": "Path Authoring Tool", "phase": 4, "status": "not-started"},
+    {"id": "F005", "name": "DrawingLayer", "phase": 1, "status": "completed"},
+    {"id": "F006", "name": "GhostLetter", "phase": 1, "status": "completed"},
+    {"id": "F007", "name": "GuideDots", "phase": 1, "status": "completed"},
+    {"id": "F008", "name": "TracingCanvas", "phase": 1, "status": "completed"},
+    {"id": "F009", "name": "Completion Detection", "phase": 1, "status": "completed"},
+    {"id": "F010", "name": "Debug Overlay", "phase": 1, "status": "completed"},
+    {"id": "F011", "name": "HomePage", "phase": 2, "status": "completed"},
+    {"id": "F012", "name": "TracingPage", "phase": 2, "status": "completed"},
+    {"id": "F013", "name": "Navigation Controls", "phase": 2, "status": "completed"},
+    {"id": "F014", "name": "Category Complete", "phase": 2, "status": "completed"},
+    {"id": "F015", "name": "Fireworks", "phase": 3, "status": "completed"},
+    {"id": "F016", "name": "FloatingDecor", "phase": 3, "status": "completed"},
+    {"id": "F017", "name": "CuteBackground", "phase": 3, "status": "completed"},
+    {"id": "F020", "name": "Path Authoring Tool", "phase": 4, "status": "skipped"},
     {"id": "F021", "name": "Letters A-Z", "phase": 4, "status": "completed"},
     {"id": "F022", "name": "Numbers 0-9", "phase": 4, "status": "completed"},
-    {"id": "F023", "name": "Shapes", "phase": 4, "status": "completed"}
+    {"id": "F023", "name": "Shapes", "phase": 4, "status": "completed"},
+    {"id": "F024", "name": "Vercel Config", "phase": 6, "status": "completed"},
+    {"id": "F025", "name": "PWA Manifest", "phase": 6, "status": "completed"},
+    {"id": "F026", "name": "Production Deploy", "phase": 6, "status": "completed"}
   ],
   "created_at": "2026-02-01T00:00:00Z",
-  "last_updated": "2026-02-02T00:00:00Z"
+  "last_updated": "2026-02-02T18:00:00Z"
 }
