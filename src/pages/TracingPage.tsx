@@ -21,6 +21,14 @@ export function TracingPage() {
   const { currentCategory, currentIndex } = state;
   const tracingCanvasRef = useRef<TracingCanvasRef>(null);
   const [showFireworks, setShowFireworks] = useState(false);
+  const [celebrating, setCelebrating] = useState(false);
+
+  // Compute tracing items early so callbacks can access them
+  const tracingItems = currentCategory ? TRACING_ITEMS[currentCategory] : [];
+  const currentTracingItem = tracingItems[currentIndex];
+  const totalItems = tracingItems.length;
+  const isFirstItem = currentIndex === 0;
+  const isLastItem = currentIndex >= totalItems - 1;
 
   // Check for debug mode via URL param or dev environment
   const debugMode = useMemo(() => {
@@ -35,21 +43,26 @@ export function TracingPage() {
 
   const handleComplete = useCallback(() => {
     console.log('Tracing complete!');
+    setCelebrating(true);
     setShowFireworks(true);
   }, []);
 
   const handleFireworksComplete = useCallback(() => {
     setShowFireworks(false);
-  }, []);
+    // Brief pause to let "Good job!" sink in, then auto-advance
+    setTimeout(() => {
+      setCelebrating(false);
+      tracingCanvasRef.current?.clear();
+      if (isLastItem) {
+        markComplete();
+      } else {
+        nextItem();
+      }
+    }, 500);
+  }, [isLastItem, markComplete, nextItem]);
 
   // Early return must come AFTER all hooks
   if (!currentCategory) return null;
-
-  const tracingItems = TRACING_ITEMS[currentCategory];
-  const currentTracingItem = tracingItems[currentIndex];
-  const totalItems = tracingItems.length;
-  const isFirstItem = currentIndex === 0;
-  const isLastItem = currentIndex >= totalItems - 1;
 
   const handleNext = () => {
     if (isLastItem) {
@@ -63,6 +76,19 @@ export function TracingPage() {
     <div className="h-full flex flex-col no-select">
       {/* Celebration fireworks */}
       <Fireworks show={showFireworks} onComplete={handleFireworksComplete} />
+
+      {/* Celebration overlay */}
+      {celebrating && (
+        <div className="fixed inset-0 z-40 flex items-center justify-center pointer-events-none">
+          <div className="text-center animate-bounce-gentle">
+            <div className="text-8xl mb-4">⭐</div>
+            <div className="font-display text-4xl font-bold text-purple-800
+                            drop-shadow-[0_2px_4px_rgba(255,255,255,0.8)]">
+              Good Job!
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Header */}
       <header className="flex items-center justify-between p-4 bg-white/30">

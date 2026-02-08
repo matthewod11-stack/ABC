@@ -65,7 +65,8 @@
     {"id": "F023", "name": "Shapes", "phase": 4, "status": "completed"},
     {"id": "F024", "name": "Vercel Config", "phase": 6, "status": "completed"},
     {"id": "F025", "name": "PWA Manifest", "phase": 6, "status": "completed"},
-    {"id": "F026", "name": "Production Deploy", "phase": 6, "status": "completed"}
+    {"id": "F026", "name": "Production Deploy", "phase": 6, "status": "completed"},
+    {"id": "F027", "name": "Demo Animation", "phase": 3, "status": "wip", "notes": "Stroke drawing animation on load - needs user verification after strobe fix"}
   ],
   "created_at": "2026-02-01T00:00:00Z",
   "last_updated": "2026-02-02T18:00:00Z"

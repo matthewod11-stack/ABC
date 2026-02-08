@@ -53,6 +53,12 @@
 .animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
 .animate-float-drift { animation: float-drift 8s ease-in-out infinite; }
 
+/* Demo animation - draws the stroke path */
+/* Note: stroke-dashoffset start value is set via inline style */
+@keyframes draw-stroke {
+  to { stroke-dashoffset: 0; }
+}
+
 /* Base styles */
 html, body, #root {
   height: 100%;

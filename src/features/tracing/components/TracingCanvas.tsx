@@ -10,6 +10,7 @@ import type { TracingItem, Point } from '../../../types';
 import { DrawingLayer, type DrawingLayerRef } from './DrawingLayer';
 import { GhostLetter } from './GhostLetter';
 import { GuideDots } from './GuideDots';
+import { DemoAnimation } from './DemoAnimation';
 import { DebugOverlay } from './DebugOverlay';
 import { useCompletionDetection } from '../hooks/useCompletionDetection';
 
@@ -36,6 +37,7 @@ export const TracingCanvas = forwardRef<TracingCanvasRef, TracingCanvasProps>(
     const drawingRef = useRef<DrawingLayerRef>(null);
     const [size, setSize] = useState(0);
     const hasCompletedRef = useRef(false);
+    const [showDemo, setShowDemo] = useState(true);
 
     const {
       hitDots,
@@ -99,7 +101,13 @@ export const TracingCanvas = forwardRef<TracingCanvasRef, TracingCanvasProps>(
     // Reset when item changes
     useEffect(() => {
       clear();
+      setShowDemo(true); // Restart demo animation for new letter
     }, [item.id, clear]);
+
+    // Handle demo animation completion
+    const handleDemoComplete = useCallback(() => {
+      setShowDemo(false);
+    }, []);
 
     // Expose clear method via ref
     useImperativeHandle(ref, () => ({ clear }), [clear]);
@@ -111,8 +119,21 @@ export const TracingCanvas = forwardRef<TracingCanvasRef, TracingCanvasProps>(
       >
         {size > 0 && (
           <>
+            {/* Layer 1: Faded ghost letter (always visible) */}
             <GhostLetter path={item.path} size={size} />
+
+            {/* Layer 2: Demo animation (plays once on load) */}
+            <DemoAnimation
+              path={item.path}
+              size={size}
+              isPlaying={showDemo}
+              onComplete={handleDemoComplete}
+            />
+
+            {/* Layer 3: Guide dots */}
             <GuideDots dots={item.guideDots} size={size} hitDots={hitDots} />
+
+            {/* Layer 4: User drawing */}
             <DrawingLayer
               ref={drawingRef}
               width={size}
@@ -120,6 +141,8 @@ export const TracingCanvas = forwardRef<TracingCanvasRef, TracingCanvasProps>(
               onStrokeUpdate={handleStrokeUpdate}
               onStrokeEnd={handleStrokeEnd}
             />
+
+            {/* Layer 5: Debug overlay (optional) */}
             {debugMode && (
               <DebugOverlay
                 dots={item.guideDots}

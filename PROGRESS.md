@@ -2,6 +2,41 @@
 
 ---
 
+## Session: 2026-02-02 (Demo Animation Feature)
+
+### Completed
+- Implemented stroke demo animation feature
+- Created `DemoAnimation.tsx` component using SVG stroke-dasharray technique
+- Integrated demo into `TracingCanvas` with proper layer ordering
+- Added `@keyframes draw-stroke` animation to index.css
+
+### Issues Encountered
+- Initial implementation caused strobe light effect due to CSS keyframe using `var(--path-length, 100)` defaulting to 100 while inline `strokeDasharray` was set to actual path length (~5)
+- Fixed by removing CSS variable from keyframe and relying on inline style as the `from` value
+
+### Technical Details
+- Animation duration: 1.5 seconds with ease-in-out timing
+- Demo plays automatically when letter/shape loads
+- Drawing layer remains active during demo (eager kids can start early)
+- Demo resets when navigating to new item
+
+### Files Changed
+| File | Change |
+|------|--------|
+| `src/features/tracing/components/DemoAnimation.tsx` | **NEW** - Animation component |
+| `src/features/tracing/components/TracingCanvas.tsx` | Added demo state, integrated DemoAnimation |
+| `src/features/tracing/index.ts` | Added DemoAnimation export |
+| `src/index.css` | Added `@keyframes draw-stroke` |
+
+### In Progress
+- User testing demo animation (needs verification that strobe fix worked)
+
+### Next Session Should
+- Verify demo animation works smoothly after strobe fix
+- Continue with Phase 5: Device Testing if demo is working
+
+---
+
 ## Session: 2026-02-02 (Phase 6 Deployment)
 
 ### What Happened
