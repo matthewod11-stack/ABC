@@ -130,8 +130,10 @@ export const TracingCanvas = forwardRef<TracingCanvasRef, TracingCanvasProps>(
               onComplete={handleDemoComplete}
             />
 
-            {/* Layer 3: Guide dots */}
-            <GuideDots dots={item.guideDots} size={size} hitDots={hitDots} />
+            {/* Layer 3: Guide dots (debug only — hidden in normal mode to reduce clutter) */}
+            {debugMode && (
+              <GuideDots dots={item.guideDots} size={size} hitDots={hitDots} />
+            )}
 
             {/* Layer 4: User drawing */}
             <DrawingLayer

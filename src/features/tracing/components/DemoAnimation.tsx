@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useMemo } from 'react';
 
 interface DemoAnimationProps {
   path: string;
@@ -12,12 +12,8 @@ interface DemoAnimationProps {
 
 /**
  * Animated demo that shows how to trace the letter/shape.
- * Uses CSS stroke-dasharray animation to create a "drawing" effect.
- *
- * The animation works by:
- * 1. Setting stroke-dasharray to the path's total length (one big dash)
- * 2. Starting with stroke-dashoffset equal to path length (hidden)
- * 3. Animating stroke-dashoffset to 0 (fully revealed)
+ * Splits multi-stroke paths into individual subpaths and animates
+ * them sequentially (one stroke at a time) like a real pen.
  */
 export function DemoAnimation({
   path,
@@ -25,46 +21,61 @@ export function DemoAnimation({
   isPlaying,
   onComplete,
   duration = 1500,
-  strokeColor = '#9333ea', // Purple-600 (same as GhostLetter)
+  strokeColor = '#9333ea', // Purple-600
   strokeWidth = 0.08,
 }: DemoAnimationProps) {
-  const pathRef = useRef<SVGPathElement>(null);
-  const [pathLength, setPathLength] = useState<number | null>(null);
+  const pathRefs = useRef<(SVGPathElement | null)[]>([]);
+  const [strokeLengths, setStrokeLengths] = useState<number[] | null>(null);
   const [animationKey, setAnimationKey] = useState(0);
 
-  // Measure path length after mount and when path changes
-  useEffect(() => {
-    // Reset for new path
-    setPathLength(null);
-    setAnimationKey((k) => k + 1);
+  // Split path into individual strokes (each subpath starts with M)
+  const strokes = useMemo(() => {
+    return path
+      .split(/(?=M\s)/i)
+      .map((s) => s.trim())
+      .filter(Boolean);
+  }, [path]);
 
-    // Use requestAnimationFrame to ensure DOM is ready
+  // Reset when path changes
+  useEffect(() => {
+    setStrokeLengths(null);
+    pathRefs.current = [];
+    setAnimationKey((k) => k + 1);
+  }, [path]);
+
+  // Measure each stroke's length after paths render
+  useEffect(() => {
+    if (strokeLengths !== null || !isPlaying) return;
+
     const raf = requestAnimationFrame(() => {
-      if (pathRef.current) {
-        const length = pathRef.current.getTotalLength();
-        setPathLength(length);
+      const lengths = strokes.map((_, i) => {
+        const el = pathRefs.current[i];
+        return el ? el.getTotalLength() : 0;
+      });
+
+      if (lengths.length > 0 && lengths.every((l) => l > 0)) {
+        setStrokeLengths(lengths);
       }
     });
 
     return () => cancelAnimationFrame(raf);
-  }, [path]);
+  }, [isPlaying, strokes, strokeLengths]);
 
-  // Handle animation completion
+  // Fire onComplete after all strokes finish
   useEffect(() => {
-    if (!isPlaying || pathLength === null) return;
+    if (!isPlaying || strokeLengths === null) return;
 
     const timer = setTimeout(() => {
       onComplete();
-    }, duration + 200); // Add buffer for visual completion
+    }, duration + 200);
 
     return () => clearTimeout(timer);
-  }, [isPlaying, pathLength, duration, onComplete]);
+  }, [isPlaying, strokeLengths, duration, onComplete]);
 
-  // Don't render if not playing
   if (!isPlaying) return null;
 
-  // Render path for measurement, but hide until we have the length
-  const isReady = pathLength !== null;
+  const isReady = strokeLengths !== null;
+  const perStrokeDuration = isReady ? duration / strokes.length : 0;
 
   return (
     <svg
@@ -73,30 +84,33 @@ export function DemoAnimation({
       width={size}
       height={size}
       className="absolute inset-0 pointer-events-none"
-      style={{
-        opacity: isReady ? 1 : 0,
-      }}
+      style={{ opacity: isReady ? 1 : 0 }}
       aria-hidden="true"
     >
-      <path
-        ref={pathRef}
-        d={path}
-        fill="none"
-        stroke={strokeColor}
-        strokeWidth={strokeWidth}
-        strokeOpacity={0.6} // Brighter than ghost (0.25)
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        style={
-          isReady
-            ? {
-                strokeDasharray: pathLength,
-                strokeDashoffset: pathLength,
-                animation: `draw-stroke ${duration}ms ease-in-out forwards`,
-              }
-            : undefined
-        }
-      />
+      {strokes.map((d, i) => (
+        <path
+          key={i}
+          ref={(el) => {
+            pathRefs.current[i] = el;
+          }}
+          d={d}
+          fill="none"
+          stroke={strokeColor}
+          strokeWidth={strokeWidth}
+          strokeOpacity={0.6}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={
+            isReady
+              ? {
+                  strokeDasharray: strokeLengths![i],
+                  strokeDashoffset: strokeLengths![i],
+                  animation: `draw-stroke ${perStrokeDuration}ms ease-in-out ${i * perStrokeDuration}ms forwards`,
+                }
+              : undefined
+          }
+        />
+      ))}
     </svg>
   );
 }
